@@ -42,6 +42,10 @@
             color: #fff;
         }
 
+        iconify-icon {
+            vertical-align: -0.125em;
+        }
+
         /* Scrollbar */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--bg-soft); }
@@ -466,6 +470,7 @@
             section { padding: 70px 0; }
         }
     </style>
+<script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
 </head>
 <body>
     <div class="blob blob-1"></div>
@@ -488,7 +493,7 @@
     <header class="hero" id="inicio">
         <div>
             <div class="avatar-ring">
-                <div class="avatar-img">🤖</div>
+                <div class="avatar-img"><iconify-icon icon="tabler:robot-face" style="font-size: 58px;"></iconify-icon></div>
             </div>
             <h1>Jostinuwu</h1>
             <p class="type-line"><span id="typed"></span><span class="cursor">&nbsp;</span></p>
@@ -506,7 +511,7 @@
             <p class="section-sub">Esto no es solo una bio, es mi mundo digital.</p>
             <div class="grid-2">
                 <div class="card reveal">
-                    <div class="icon">🚀</div>
+                    <div class="icon"><iconify-icon icon="tabler:rocket"></iconify-icon></div>
                     <h3>Mi historia</h3>
                     <p>
                         Nací para crear. Desde pequeño me fascinó la tecnología,
@@ -516,7 +521,7 @@
                     </p>
                 </div>
                 <div class="card reveal">
-                    <div class="icon">🎯</div>
+                    <div class="icon"><iconify-icon icon="tabler:target"></iconify-icon></div>
                     <h3>Mi misión</h3>
                     <p>
                         Inspirar a otros a perseguir lo que les apasiona. Creo que
@@ -604,12 +609,12 @@
             <h2 class="section-title">Galería</h2>
             <p class="section-sub">Un vistazo a mi universo visual.</p>
             <div class="gallery">
-                <div class="gallery-item reveal">🎮<span class="caption">Game nights</span></div>
-                <div class="gallery-item reveal">🎨<span class="caption">Arte digital</span></div>
-                <div class="gallery-item reveal">🎧<span class="caption">Música & flow</span></div>
-                <div class="gallery-item reveal">🏙️<span class="caption">Ciudad</span></div>
-                <div class="gallery-item reveal">📷<span class="caption">Detrás de cámaras</span></div>
-                <div class="gallery-item reveal">🌙<span class="caption">Noches creativas</span></div>
+                <div class="gallery-item reveal"><iconify-icon icon="tabler:device-gamepad-2" style="font-size: 4em;"></iconify-icon><span class="caption">Game nights</span></div>
+                <div class="gallery-item reveal"><iconify-icon icon="tabler:palette" style="font-size: 4em;"></iconify-icon><span class="caption">Arte digital</span></div>
+                <div class="gallery-item reveal"><iconify-icon icon="tabler:headphones" style="font-size: 4em;"></iconify-icon><span class="caption">Música & flow</span></div>
+                <div class="gallery-item reveal"><iconify-icon icon="tabler:building-skyscraper" style="font-size: 4em;"></iconify-icon><span class="caption">Ciudad</span></div>
+                <div class="gallery-item reveal"><iconify-icon icon="tabler:camera" style="font-size: 4em;"></iconify-icon><span class="caption">Detrás de cámaras</span></div>
+                <div class="gallery-item reveal"><iconify-icon icon="tabler:moon-stars" style="font-size: 4em;"></iconify-icon><span class="caption">Noches creativas</span></div>
             </div>
         </section>
 
@@ -617,9 +622,9 @@
             <h2 class="section-title">Mis espacios</h2>
             <p class="section-sub">Conoce los distintos lados de Jostinuwu.</p>
             <div class="tabs">
-                <button class="tab active" data-tab="gaming">🎮 Gaming</button>
-                <button class="tab" data-tab="arte">🎨 Arte</button>
-                <button class="tab" data-tab="ideas">💡 Ideas</button>
+                <button class="tab active" data-tab="gaming"><iconify-icon icon="tabler:device-gamepad-2"></iconify-icon> Gaming</button>
+                <button class="tab" data-tab="arte"><iconify-icon icon="tabler:palette"></iconify-icon> Arte</button>
+                <button class="tab" data-tab="ideas"><iconify-icon icon="tabler:bulb"></iconify-icon> Ideas</button>
             </div>
 
             <div class="tab-panel active" id="tab-gaming">
@@ -650,10 +655,10 @@
                     <h3>Hablemos</h3>
                     <p>Respondo rápido en redes y me encanta conocer gente nueva.</p>
                     <div class="social-row">
-                        <a class="social-chip" href="#">📸 Instagram</a>
-                        <a class="social-chip" href="#">🎵 TikTok</a>
-                        <a class="social-chip" href="#">▶️ YouTube</a>
-                        <a class="social-chip" href="#">🐦 X</a>
+                        <a class="social-chip" href="#"><iconify-icon icon="tabler:brand-instagram"></iconify-icon> Instagram</a>
+                        <a class="social-chip" href="#"><iconify-icon icon="tabler:brand-tiktok"></iconify-icon> TikTok</a>
+                        <a class="social-chip" href="#"><iconify-icon icon="tabler:brand-youtube"></iconify-icon> YouTube</a>
+                        <a class="social-chip" href="#"><iconify-icon icon="tabler:brand-x"></iconify-icon> X</a>
                     </div>
                 </div>
                 <form class="card reveal contact-form" id="contactForm">
@@ -661,14 +666,14 @@
                     <input type="email" placeholder="Tu correo" required>
                     <textarea placeholder="Cuéntame..." required></textarea>
                     <button class="btn btn-primary" type="submit">Enviar mensaje</button>
-                    <p id="formMsg" style="display:none; color:#22d3ee;">¡Gracias! Te responderé pronto. 💜</p>
+                    <p id="formMsg" style="display:none; color:#22d3ee;">¡Gracias! Te responderé pronto. <iconify-icon icon="tabler:heart-filled" style="color:#f472b6;"></iconify-icon></p>
                 </form>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>© 2026 Jostinuwu · Hecho con 💜, café y código</p>
+        <p>© 2026 Jostinuwu · Hecho con <iconify-icon icon="tabler:heart-filled" style="color: #f472b6;"></iconify-icon>, café y código</p>
     </footer>
 
     <button id="toTop" aria-label="Volver arriba">↑</button>
