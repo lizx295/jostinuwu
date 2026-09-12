@@ -3,474 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jostinuwu - Mi Mundo Digital</title>
+    <title>jostinuwu — pequeño diario digital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a14;
-            --bg-soft: #12121f;
-            --card: rgba(255, 255, 255, 0.04);
-            --border: rgba(255, 255, 255, 0.08);
-            --text: #eaeaf2;
-            --muted: #9b9bb4;
-            --primary: #7c6cff;
-            --secondary: #22d3ee;
-            --accent: #f472b6;
-            --gradient: linear-gradient(135deg, #7c6cff 0%, #22d3ee 50%, #f472b6 100%);
-            --radius: 18px;
+            --canvas: #FAF7F2;
+            --surface: #FFFFFF;
+            --lilac: #F0EBFA;
+            --peach: #FBE9E3;
+            --mint: #E7F2EE;
+            --ink: #26222B;
+            --muted: #6E6874;
+            --faint: #A39CAD;
+            --line: #E9E3EC;
+            --accent: #6E5EC7;
+            --accent-deep: #5C4FB0;
+            --radius: 14px;
+            --maxw: 1080px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--canvas);
+            color: var(--ink);
+            line-height: 1.75;
+            font-size: 1.02rem;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        ::selection {
-            background: var(--primary);
-            color: #fff;
-        }
+        ::selection { background: var(--lilac); color: var(--ink); }
 
-        iconify-icon {
-            vertical-align: -0.125em;
-        }
-
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: var(--bg-soft); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--primary), var(--secondary)); border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: var(--canvas); }
+        ::-webkit-scrollbar-thumb { background: #D8D1E0; border-radius: 10px; }
 
-        /* Animated bg blobs */
+        /* Fine organic noise overlay */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: .045;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* Soft pastel blobs (subtle, no harsh gradients) */
         .blob {
             position: fixed;
             border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.35;
+            filter: blur(90px);
             z-index: -1;
-            animation: float 14s ease-in-out infinite;
         }
-        .blob-1 { width: 500px; height: 500px; background: #7c6cff; top: -150px; left: -100px; }
-        .blob-2 { width: 450px; height: 450px; background: #22d3ee; top: 40%; right: -150px; animation-delay: -4s; }
-        .blob-3 { width: 400px; height: 400px; background: #f472b6; bottom: -150px; left: 30%; animation-delay: -8s; }
+        .blob-1 { width: 480px; height: 480px; background: var(--lilac); top: -140px; right: -120px; opacity: .7; }
+        .blob-2 { width: 420px; height: 420px; background: var(--peach); bottom: 10%; left: -160px; opacity: .6; }
+        .blob-3 { width: 380px; height: 380px; background: var(--mint); top: 45%; right: -160px; opacity: .55; }
 
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(40px, -40px) scale(1.1); }
-        }
+        .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
 
-        /* Navbar */
+        /* ---------- Nav ---------- */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 100;
-            padding: 16px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.4s ease;
+            transition: all .35s ease;
+            padding: 22px 0;
         }
         nav.scrolled {
-            background: rgba(10, 10, 20, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border);
-            padding: 10px 40px;
+            background: rgba(250, 247, 242, .9);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line);
+            padding: 14px 0;
         }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; }
         .logo {
-            font-weight: 800;
-            font-size: 1.3em;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--ink);
             text-decoration: none;
+            letter-spacing: -.01em;
         }
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 10px;
-        }
+        .logo span { color: var(--accent); }
+        nav ul { display: flex; list-style: none; gap: 6px; }
         nav ul a {
             color: var(--muted);
             text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.95em;
-            transition: all 0.3s;
+            font-size: .92rem;
+            padding: 8px 14px;
+            border-radius: 999px;
+            transition: color .25s, background .25s;
         }
-        nav ul a:hover {
-            color: var(--text);
-            background: var(--card);
-        }
-        .nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.6em;
-            cursor: pointer;
-        }
+        nav ul a:hover { color: var(--ink); background: var(--lilac); }
+        .nav-toggle { display: none; background: none; border: none; font-size: 1.5rem; color: var(--ink); cursor: pointer; line-height: 1; }
 
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 100px 20px 60px;
+        /* ---------- Hero ---------- */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px; position: relative; }
+        .eyebrow {
+            font-size: .78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .2em;
+            color: var(--accent);
+            margin-bottom: 22px;
         }
-        .avatar-ring {
-            position: relative;
-            width: 170px;
-            height: 170px;
-            margin: 0 auto 28px;
+        .hero-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 600;
+            font-size: clamp(3.2rem, 10vw, 6.4rem);
+            line-height: .98;
+            letter-spacing: -.02em;
+            max-width: 14ch;
         }
-        .avatar-ring::before {
-            content: "";
-            position: absolute;
-            inset: -8px;
-            border-radius: 50%;
-            background: var(--gradient);
-            animation: spin 6s linear infinite;
-        }
-        .avatar-ring::after {
-            content: "";
-            position: absolute;
-            inset: 2px;
-            background: var(--bg);
-            border-radius: 50%;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .avatar-img {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 70px;
-            background: var(--bg-soft);
-            border: 3px solid var(--card);
-        }
-        .hero h1 {
-            font-size: 3.2em;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
+        .hero-title em { font-weight: 500; color: var(--accent); }
         .type-line {
-            font-size: 1.25em;
+            margin: 26px 0 32px;
+            font-size: clamp(1.1rem, 2.5vw, 1.45rem);
             color: var(--muted);
-            margin-top: 6px;
-            min-height: 1.6em;
+            min-height: 1.7em;
+            max-width: 46ch;
         }
-        .type-line .cursor {
-            display: inline-block;
-            width: 2px;
-            background: var(--secondary);
-            animation: blink 0.8s steps(1) infinite;
-        }
+        .type-line .cursor { display: inline-block; width: 2px; height: 1.05em; background: var(--accent); vertical-align: -0.12em; animation: blink .9s steps(1) infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        .hero-buttons {
-            margin-top: 32px;
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
         .btn {
+            display: inline-block;
+            padding: 13px 26px;
+            border-radius: 999px;
+            font-weight: 500;
+            font-size: .95rem;
             text-decoration: none;
-            padding: 14px 30px;
-            border-radius: 40px;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 1px solid var(--border);
-            color: var(--text);
-            background: var(--card);
+            border: 1px solid transparent;
+            transition: transform .25s ease, box-shadow .25s ease, background .25s, color .25s;
+            cursor: pointer;
         }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(124, 108, 255, 0.3); }
-        .btn-primary {
-            background: var(--gradient);
-            border: none;
-            color: #fff;
-            box-shadow: 0 8px 30px rgba(124, 108, 255, 0.4);
-        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: var(--accent-deep); box-shadow: 0 12px 26px rgba(110, 94, 199, .3); }
+        .btn-ghost { border-color: var(--line); color: var(--ink); background: var(--surface); }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-        .scroll-indicator {
+        .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 44px; max-width: 560px; }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .88rem;
+            color: var(--muted);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            padding: 8px 16px;
+            border-radius: 999px;
+        }
+        .pill iconify-icon { color: var(--accent); font-size: 1rem; }
+
+        .hero-foot {
             position: absolute;
             bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-            color: var(--muted);
-            font-size: 1.4em;
-        }
-        @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
-
-        /* Sections */
-        main { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
-        section { padding: 90px 0; }
-        .section-title {
-            font-size: 2.2em;
-            font-weight: 800;
-            margin-bottom: 12px;
-            position: relative;
-            display: inline-block;
-        }
-        .section-title::after {
-            content: "";
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 60%;
-            height: 4px;
-            border-radius: 4px;
-            background: var(--gradient);
-        }
-        .section-sub { color: var(--muted); max-width: 600px; margin-bottom: 40px; }
-
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px; }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 26px;
-            backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
-        }
-        .card:hover { transform: translateY(-6px); border-color: rgba(124, 108, 255, 0.5); box-shadow: 0 15px 40px rgba(124, 108, 255, 0.15); }
-        .card .icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            background: var(--gradient);
-            margin-bottom: 14px;
-        }
-        .card h3 { font-size: 1.15em; margin-bottom: 8px; }
-        .card p { color: var(--muted); font-size: 0.95em; }
-
-        /* Stats */
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; text-align: center; }
-        .stat .number {
-            font-size: 2.4em;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .stat .label { color: var(--muted); font-size: 0.9em; }
-
-        /* Skills bars */
-        .skill { margin-bottom: 20px; }
-        .skill .top { display: flex; justify-content: space-between; margin-bottom: 8px; }
-        .skill .bar {
-            height: 10px;
-            border-radius: 10px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            overflow: hidden;
-        }
-        .skill .fill {
-            height: 100%;
-            width: 0;
-            border-radius: 10px;
-            background: var(--gradient);
-            transition: width 1.2s ease;
-        }
-
-        /* Timeline */
-        .timeline { position: relative; padding-left: 30px; }
-        .timeline::before {
-            content: "";
-            position: absolute;
-            left: 8px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--gradient);
-            border-radius: 3px;
-        }
-        .timeline-item { position: relative; margin-bottom: 30px; }
-        .timeline-item::before {
-            content: "";
-            position: absolute;
-            left: -30px;
-            top: 6px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--bg);
-            border: 3px solid var(--primary);
-        }
-        .timeline-item .date {
-            font-size: 0.85em;
-            color: var(--secondary);
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        .timeline-item h4 { margin: 4px 0; }
-        .timeline-item p { color: var(--muted); font-size: 0.95em; }
-
-        /* Gallery */
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
-        .gallery-item {
-            position: relative;
-            border-radius: var(--radius);
-            overflow: hidden;
-            aspect-ratio: 1;
-            background: var(--card);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4em;
-            cursor: pointer;
-            transition: transform 0.4s ease;
-        }
-        .gallery-item:hover { transform: scale(1.04); }
-        .gallery-item .caption {
-            position: absolute;
-            bottom: 0;
             left: 0;
             right: 0;
-            padding: 12px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.85));
-            color: #fff;
-            font-size: 0.9em;
-            font-weight: 600;
+            text-align: center;
+            font-size: .78rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--faint);
         }
+
+        /* ---------- Sections ---------- */
+        section { padding: 96px 0; }
+        .sec-head { margin-bottom: 56px; }
+        .sec-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 600;
+            font-size: clamp(2rem, 5vw, 3.1rem);
+            line-height: 1.08;
+            letter-spacing: -.01em;
+            margin-top: 10px;
+        }
+
+        /* About: editorial split, asymmetric */
+        .split { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(28px, 5vw, 80px); align-items: start; }
+        .split .big-q {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 500;
+            font-size: clamp(1.5rem, 3vw, 2.1rem);
+            line-height: 1.2;
+            letter-spacing: -.01em;
+        }
+        .split .big-q span { color: var(--accent); font-style: italic; }
+        .split p { color: var(--muted); max-width: 52ch; }
+        .split p + p { margin-top: 18px; }
+        .note {
+            display: inline-block;
+            margin-top: 26px;
+            font-size: .9rem;
+            color: var(--accent);
+            border-left: 3px solid var(--accent);
+            padding-left: 14px;
+        }
+
+        /* Skills: simple rows, not cards */
+        .skill { display: grid; grid-template-columns: 1fr auto; gap: 6px 18px; align-items: baseline; padding: 18px 4px; border-bottom: 1px solid var(--line); }
+        .skill:first-of-type { border-top: 1px solid var(--line); }
+        .skill .lbl { font-weight: 500; }
+        .skill .pct { font-family: 'Fraunces', Georgia, serif; color: var(--accent); font-size: 1.05rem; }
+        .skill .track { grid-column: 1 / -1; height: 6px; background: var(--lilac); border-radius: 99px; overflow: hidden; }
+        .skill .fill { height: 100%; width: 0; background: var(--accent); border-radius: 99px; transition: width 1s cubic-bezier(.2,.6,.2,1); }
+
+        /* Timeline: minimal */
+        .tl { position: relative; padding-left: 22px; }
+        .tl::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: var(--line); }
+        .tl-item { position: relative; padding: 0 0 40px 22px; }
+        .tl-item:last-child { padding-bottom: 0; }
+        .tl-item::before {
+            content: ""; position: absolute; left: -23px; top: 7px;
+            width: 11px; height: 11px; border-radius: 50%;
+            background: var(--canvas); border: 2px solid var(--accent);
+        }
+        .tl-item .date { font-size: .78rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); }
+        .tl-item h4 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 1.18rem; margin: 6px 0 4px; }
+        .tl-item p { color: var(--muted); max-width: 60ch; }
+
+        /* Gallery: bento, editorial */
+        .gallery { display: grid; grid-template-columns: 1.35fr 1fr 1fr; grid-auto-rows: 160px; gap: 16px; }
+        .tile {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+        .tile:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(38, 34, 43, .12); }
+        .tile iconify-icon { font-size: 3.2rem; opacity: .85; }
+        .tile .cap {
+            position: absolute;
+            left: 16px; bottom: 14px;
+            font-size: .74rem;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--ink);
+            opacity: .8;
+        }
+        .g-1 { grid-column: 1; grid-row: 1 / 3; background: var(--lilac); }
+        .g-2 { grid-column: 2; grid-row: 1; background: var(--mint); }
+        .g-3 { grid-column: 3; grid-row: 1; background: var(--peach); }
+        .g-4 { grid-column: 2 / 4; grid-row: 2; background: var(--peach); }
+        .g-5 { grid-column: 1; grid-row: 3; background: var(--peach); }
+        .g-6 { grid-column: 2 / 4; grid-row: 3; background: var(--mint); }
 
         /* Tabs */
-        .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+        .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 34px; }
         .tab {
-            padding: 10px 22px;
-            border-radius: 30px;
-            border: 1px solid var(--border);
-            background: var(--card);
+            padding: 10px 20px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: var(--surface);
             color: var(--muted);
             cursor: pointer;
-            font-size: 0.95em;
-            transition: all 0.3s;
+            font-size: .92rem;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all .25s;
         }
-        .tab.active {
-            background: var(--gradient);
-            color: #fff;
-            border-color: transparent;
-        }
+        .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
         .tab-panel { display: none; }
-        .tab-panel.active { display: block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-panel.active { display: block; animation: fadeIn .35s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel-body {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 30px;
+        }
+        .panel-body h4 { font-family: 'Fraunces', Georgia, serif; font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; }
+        .panel-body p { color: var(--muted); max-width: 62ch; }
 
         /* Contact */
-        .contact-form { display: grid; gap: 18px; }
-        .contact-form input, .contact-form textarea {
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+        .contact-copy p { color: var(--muted); max-width: 46ch; margin-bottom: 26px; }
+        .contact-copy a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(110,94,199,.35); }
+        .contact-copy a:hover { border-color: var(--accent); }
+        .input {
             width: 100%;
-            padding: 15px 20px;
+            padding: 14px 18px;
             border-radius: 12px;
-            border: 1px solid var(--border);
-            background: var(--card);
-            color: var(--text);
+            border: 1px solid var(--line);
+            background: var(--surface);
+            color: var(--ink);
             font-family: inherit;
-            font-size: 1em;
-            transition: border-color 0.3s;
+            font-size: .98rem;
+            transition: border-color .25s;
+            margin-bottom: 16px;
         }
-        .contact-form input:focus, .contact-form textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        .contact-form textarea { resize: vertical; min-height: 130px; }
+        .input:focus { outline: none; border-color: var(--accent); }
+        textarea.input { resize: vertical; min-height: 130px; }
+        .form-note { display: none; color: var(--accent); font-size: .92rem; margin-top: 4px; }
 
-        .social-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 20px; }
-        .social-chip {
-            text-decoration: none;
-            color: var(--muted);
-            padding: 10px 20px;
-            border-radius: 30px;
-            border: 1px solid var(--border);
-            transition: all 0.3s;
-            background: var(--card);
-        }
-        .social-chip:hover { color: #fff; background: var(--gradient); border-color: transparent; }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid var(--border);
-            color: var(--muted);
-            margin-top: 40px;
-        }
+        /* ---------- Footer (dark for contrast) ---------- */
+        footer { background: #2C2A34; color: #B8B2C4; margin-top: 80px; }
+        .foot-inner { max-width: var(--maxw); margin: 0 auto; padding: 56px 28px; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; }
+        .foot-inner .logo { color: #EDEBF4; }
+        .foot-inner .logo span { color: #B9ABF0; }
+        .foot-tag { font-size: .92rem; max-width: 40ch; color: #9993A6; margin-top: 10px; }
+        .foot-line { text-align: right; font-size: .85rem; color: #8F89A0; }
+        .foot-line iconify-icon { color: var(--peach); vertical-align: -2px; }
+        .foot-links { margin-top: 14px; display: flex; gap: 18px; }
+        .foot-links a { color: #C9C3D6; text-decoration: none; font-size: .88rem; }
+        .foot-links a:hover { color: #fff; }
 
         /* Back to top */
         #toTop {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--gradient);
-            color: #fff;
-            border: none;
-            font-size: 1.3em;
-            cursor: pointer;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.4s;
-            box-shadow: 0 10px 30px rgba(124, 108, 255, 0.4);
+            position: fixed; bottom: 28px; right: 28px; width: 48px; height: 48px;
+            border-radius: 50%; border: none; background: var(--ink); color: #EDEBF4;
+            font-size: 1.1rem; cursor: pointer; opacity: 0; pointer-events: none;
+            transition: opacity .3s, transform .3s; z-index: 90;
         }
         #toTop.visible { opacity: 1; pointer-events: auto; }
+        #toTop:hover { transform: translateY(-3px); }
 
-        /* Reveal on scroll */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
+        /* Reveal */
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        @media (max-width: 720px) {
+        @media (max-width: 760px) {
             nav ul {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 75%;
-                height: 100vh;
-                background: var(--bg-soft);
-                flex-direction: column;
-                padding: 80px 30px;
-                transition: right 0.4s ease;
-                gap: 18px;
+                position: fixed; top: 0; right: -100%; width: 76%; height: 100vh;
+                background: var(--canvas); flex-direction: column;
+                padding: 90px 34px; gap: 16px; transition: right .35s ease;
+                border-left: 1px solid var(--line);
             }
             nav ul.open { right: 0; }
-            nav ul a { font-size: 1.2em; }
+            nav ul a { font-size: 1.15rem; padding: 10px 0; }
             .nav-toggle { display: block; position: relative; z-index: 110; }
-            .hero h1 { font-size: 2.2em; }
-            main { padding: 0 18px; }
-            section { padding: 70px 0; }
+            .split, .contact-grid { grid-template-columns: 1fr; }
+            section { padding: 72px 0; }
+            .gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 140px; }
+            .g-6 { grid-column: 1 / 3; }
+            .g-5 { grid-column: 1; }
+            .foot-inner { grid-template-columns: 1fr; text-align: left; }
+            .foot-line { text-align: left; }
+            .hero { padding-top: 140px; }
         }
     </style>
-<script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
 </head>
 <body>
     <div class="blob blob-1"></div>
@@ -478,241 +368,238 @@
     <div class="blob blob-3"></div>
 
     <nav id="navbar">
-        <a href="#inicio" class="logo">jostinuwu</a>
-        <ul id="navMenu">
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#sobre-mi">Sobre mí</a></li>
-            <li><a href="#habilidades">Habilidades</a></li>
-            <li><a href="#trayectoria">Trayectoria</a></li>
-            <li><a href="#galeria">Galería</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-        </ul>
-        <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+        <div class="wrap nav-inner">
+            <a href="#inicio" class="logo">jostinuwu<span>.</span></a>
+            <ul id="navMenu">
+                <li><a href="#sobre-mi">sobre mí</a></li>
+                <li><a href="#camino">camino</a></li>
+                <li><a href="#galeria">galería</a></li>
+                <li><a href="#contacto">contacto</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+        </div>
     </nav>
 
     <header class="hero" id="inicio">
-        <div>
-            <div class="avatar-ring">
-                <div class="avatar-img"><iconify-icon icon="tabler:robot-face" style="font-size: 58px;"></iconify-icon></div>
+        <div class="wrap">
+            <p class="eyebrow reveal">hola, soy</p>
+            <h1 class="hero-title reveal">jostinuwu<span style="color:var(--accent)">.</span></h1>
+            <p class="type-line reveal"><span id="typed"></span><span class="cursor"></span></p>
+            <div class="hero-actions reveal">
+                <a class="btn btn-primary" href="#contacto">hablemos</a>
+                <a class="btn btn-ghost" href="#galeria">ver cosas</a>
             </div>
-            <h1>Jostinuwu</h1>
-            <p class="type-line"><span id="typed"></span><span class="cursor">&nbsp;</span></p>
-            <div class="hero-buttons">
-                <a href="#sobremi" class="btn btn-primary">Conóceme</a>
-                <a href="#contacto" class="btn">Hablemos</a>
+            <div class="pills reveal">
+                <span class="pill"><iconify-icon icon="tabler:device-gamepad-2"></iconify-icon> game nights</span>
+                <span class="pill"><iconify-icon icon="tabler:palette"></iconify-icon> arte digital</span>
+                <span class="pill"><iconify-icon icon="tabler:writing"></iconify-icon> historias</span>
+                <span class="pill"><iconify-icon icon="tabler:coffee"></iconify-icon> café</span>
+                <span class="pill"><iconify-icon icon="tabler:moon"></iconify-icon> ideas de madrugada</span>
             </div>
         </div>
-        <div class="scroll-indicator">▾</div>
+        <div class="hero-foot">↓ scrollea, no muerde</div>
     </header>
 
     <main>
         <section id="sobre-mi">
-            <h2 class="section-title">Sobre mí</h2>
-            <p class="section-sub">Esto no es solo una bio, es mi mundo digital.</p>
-            <div class="grid-2">
-                <div class="card reveal">
-                    <div class="icon"><iconify-icon icon="tabler:rocket"></iconify-icon></div>
-                    <h3>Mi historia</h3>
-                    <p>
-                        Nací para crear. Desde pequeño me fascinó la tecnología,
-                        los videojuegos y contar historias. Ese interés se convirtió
-                        en una forma de vida: explorar, experimentar y compartir
-                        cada descubrimiento con el mundo.
-                    </p>
+            <div class="wrap">
+                <div class="sec-head reveal">
+                    <p class="eyebrow">sobre mí</p>
+                    <h2 class="sec-title">alguien que cree que el mundo va mejor con historias.</h2>
                 </div>
-                <div class="card reveal">
-                    <div class="icon"><iconify-icon icon="tabler:target"></iconify-icon></div>
-                    <h3>Mi misión</h3>
-                    <p>
-                        Inspirar a otros a perseguir lo que les apasiona. Creo que
-                        con curiosidad, constancia y buenas historias, cualquier
-                        idea puede convertirse en algo extraordinario.
-                    </p>
+                <div class="split">
+                    <p class="big-q reveal">¿quién es <span>jostinuwu</span>?</p>
+                    <div class="reveal">
+                        <p>Alguien que creció entre pixeles y que ahora intenta convertir esa energía en cosas que se sienten reales: videos, arte, textos y un montón de experimentos a medio terminar.</p>
+                        <p>Me gusta aprender en voz alta, romper cosas (digitalmente) y reírme de mis propios errores. Esta página no intenta impresionar a nadie; es mi rincón para tener los pies en el suelo mientras pienso en grande.</p>
+                        <p class="note">si tiene café, hay código (o por lo menos intención).</p>
+                    </div>
                 </div>
             </div>
-            <div class="stats reveal" style="margin-top: 22px;">
-                <div class="stat"><div class="number" data-target="120">0</div><div class="label">Videos creados</div></div>
-                <div class="stat"><div class="number" data-target="48">0</div><div class="label">K proyectos</div></div>
-                <div class="stat"><div class="number" data-target="12">0</div><div class="label">Países soñados</div></div>
-                <div class="stat"><div class="number" data-target="99">0</div><div class="label">% pasión</div></div>
-            </div>
-            <div id="sobremi"></div>
         </section>
 
-        <section id="habilidades">
-            <h2 class="section-title">Habilidades</h2>
-            <p class="section-sub">Lo que mejor sé hacer en mi viaje digital.</p>
-            <div class="grid-2">
-                <div class="card reveal">
-                    <h3>Creatividad</h3>
-                    <div class="skill">
-                        <div class="top"><span>Creación de contenido</span><span>95%</span></div>
-                        <div class="bar"><div class="fill" data-width="95"></div></div>
-                    </div>
-                    <div class="skill">
-                        <div class="top"><span>Edición y diseño</span><span>88%</span></div>
-                        <div class="bar"><div class="fill" data-width="88"></div></div>
-                    </div>
-                    <div class="skill">
-                        <div class="top"><span>Storytelling</span><span>92%</span></div>
-                        <div class="bar"><div class="fill" data-width="92"></div></div>
-                    </div>
+        <section id="camino">
+            <div class="wrap">
+                <div class="sec-head reveal">
+                    <p class="eyebrow">¿qué sé hacer?</p>
+                    <h2 class="sec-title">cosas que practico demasiadas horas.</h2>
                 </div>
-                <div class="card reveal">
-                    <h3>Tecnología</h3>
+                <div class="reveal">
                     <div class="skill">
-                        <div class="top"><span>Gamer lifelong</span><span>97%</span></div>
-                        <div class="bar"><div class="fill" data-width="97"></div></div>
+                        <span class="lbl">crear contenido</span><span class="pct">90%</span>
+                        <span class="track"><span class="fill" data-width="90"></span></span>
                     </div>
                     <div class="skill">
-                        <div class="top"><span>Nuevas tendencias</span><span>85%</span></div>
-                        <div class="bar"><div class="fill" data-width="85"></div></div>
+                        <span class="lbl">editar hasta que duela</span><span class="pct">82%</span>
+                        <span class="track"><span class="fill" data-width="82"></span></span>
                     </div>
                     <div class="skill">
-                        <div class="top"><span>Curiosidad infinita</span><span>100%</span></div>
-                        <div class="bar"><div class="fill" data-width="100"></div></div>
+                        <span class="lbl">perder con estilo</span><span class="pct">99%</span>
+                        <span class="track"><span class="fill" data-width="99"></span></span>
+                    </div>
+                    <div class="skill">
+                        <span class="lbl">aprender algo nuevo cada semana</span><span class="pct">100%</span>
+                        <span class="track"><span class="fill" data-width="100"></span></span>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="trayectoria">
-            <h2 class="section-title">Trayectoria</h2>
-            <p class="section-sub">Los momentos que han marcado mi camino.</p>
-            <div class="card reveal" style="padding: 30px;">
-                <div class="timeline">
-                    <div class="timeline-item">
+            <div class="wrap">
+                <div class="sec-head reveal">
+                    <p class="eyebrow">camino</p>
+                    <h2 class="sec-title">una línea de tiempo sin spoilers.</h2>
+                </div>
+                <div class="tl reveal">
+                    <div class="tl-item">
                         <span class="date">2020</span>
-                        <h4>El primer clic</h4>
-                        <p>Descubrí el poder de crear contenido y empecé a compartir mi mundo.</p>
+                        <h4>el primer clic</h4>
+                        <p>Descubrí que podía crear cosas con mis manos (y un teclado). Nadie lo vio, pero ahí empezó todo.</p>
                     </div>
-                    <div class="timeline-item">
+                    <div class="tl-item">
                         <span class="date">2022</span>
-                        <h4>Comunidad</h4>
-                        <p>Mi comunidad empezó a crecer y con ellas, las historias que me mueven.</p>
+                        <h4>la comunidad</h4>
+                        <p>La gente empezó a quedarse a ver qué hacía. Aprendí que compartir también es escuchar.</p>
                     </div>
-                    <div class="timeline-item">
+                    <div class="tl-item">
                         <span class="date">2024</span>
-                        <h4>Nuevos horizontes</h4>
-                        <p>Lancé proyectos que combinan tecnología, arte y entretenimiento.</p>
+                        <h4>nuevos horizontes</h4>
+                        <p>Mezclé tecnología, arte y entretenimiento en proyectos que antes solo vivían en mi cabeza.</p>
                     </div>
-                    <div class="timeline-item">
-                        <span class="date">2026</span>
-                        <h4>Hoy</h4>
-                        <p>Este espacio digital que te invita a ser parte de mi historia.</p>
+                    <div class="tl-item">
+                        <span class="date">hoy</span>
+                        <h4>este rincón</h4>
+                        <p>Escribo esto frente a un café. El próximo capítulo aún no tiene fecha.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="galeria">
-            <h2 class="section-title">Galería</h2>
-            <p class="section-sub">Un vistazo a mi universo visual.</p>
-            <div class="gallery">
-                <div class="gallery-item reveal"><iconify-icon icon="tabler:device-gamepad-2" style="font-size: 4em;"></iconify-icon><span class="caption">Game nights</span></div>
-                <div class="gallery-item reveal"><iconify-icon icon="tabler:palette" style="font-size: 4em;"></iconify-icon><span class="caption">Arte digital</span></div>
-                <div class="gallery-item reveal"><iconify-icon icon="tabler:headphones" style="font-size: 4em;"></iconify-icon><span class="caption">Música & flow</span></div>
-                <div class="gallery-item reveal"><iconify-icon icon="tabler:building-skyscraper" style="font-size: 4em;"></iconify-icon><span class="caption">Ciudad</span></div>
-                <div class="gallery-item reveal"><iconify-icon icon="tabler:camera" style="font-size: 4em;"></iconify-icon><span class="caption">Detrás de cámaras</span></div>
-                <div class="gallery-item reveal"><iconify-icon icon="tabler:moon-stars" style="font-size: 4em;"></iconify-icon><span class="caption">Noches creativas</span></div>
+            <div class="wrap">
+                <div class="sec-head reveal">
+                    <p class="eyebrow">galería</p>
+                    <h2 class="sec-title">fragmentos de mi universo.</h2>
+                </div>
+                <div class="gallery">
+                    <div class="tile g-1 reveal"><iconify-icon icon="tabler:device-gamepad-2"></iconify-icon><span class="cap">game nights</span></div>
+                    <div class="tile g-2 reveal"><iconify-icon icon="tabler:palette"></iconify-icon><span class="cap">arte digital</span></div>
+                    <div class="tile g-3 reveal"><iconify-icon icon="tabler:headphones"></iconify-icon><span class="cap">música a todo vol.</span></div>
+                    <div class="tile g-4 reveal"><iconify-icon icon="tabler:building-skyscraper"></iconify-icon><span class="cap">la ciudad</span></div>
+                    <div class="tile g-5 reveal"><iconify-icon icon="tabler:camera"></iconify-icon><span class="cap">detrás de cámaras</span></div>
+                    <div class="tile g-6 reveal"><iconify-icon icon="tabler:moon-stars"></iconify-icon><span class="cap">noches creativas</span></div>
+                </div>
             </div>
         </section>
 
         <section id="espacios">
-            <h2 class="section-title">Mis espacios</h2>
-            <p class="section-sub">Conoce los distintos lados de Jostinuwu.</p>
-            <div class="tabs">
-                <button class="tab active" data-tab="gaming"><iconify-icon icon="tabler:device-gamepad-2"></iconify-icon> Gaming</button>
-                <button class="tab" data-tab="arte"><iconify-icon icon="tabler:palette"></iconify-icon> Arte</button>
-                <button class="tab" data-tab="ideas"><iconify-icon icon="tabler:bulb"></iconify-icon> Ideas</button>
-            </div>
-
-            <div class="tab-panel active" id="tab-gaming">
-                <div class="card">
-                    <h3>Zona gaming</h3>
-                    <p>Retos, streams y el grind diario. Los videojuegos me enseñaron estrategia, paciencia y trabajo en equipo. Aquí vive el lado competitivo.</p>
+            <div class="wrap">
+                <div class="sec-head reveal">
+                    <p class="eyebrow">espacios</p>
+                    <h2 class="sec-title">los lados de jostinuwu.</h2>
                 </div>
-            </div>
-            <div class="tab-panel" id="tab-arte">
-                <div class="card">
-                    <h3>Zona arte</h3>
-                    <p>El lado sensible: música, diseño y color. Crear algo desde cero y que conecte con alguien es la mejor sensación del mundo.</p>
-                </div>
-            </div>
-            <div class="tab-panel" id="tab-ideas">
-                <div class="card">
-                    <h3>Zona ideas</h3>
-                    <p>Donde nacen los proyectos grandes. Prototipos, experimentos y todo lo que la curiosidad me empuja a intentar.</p>
+                <div class="reveal">
+                    <div class="tabs">
+                        <button class="tab active" data-tab="gaming"><iconify-icon icon="tabler:device-gamepad-2"></iconify-icon> gaming</button>
+                        <button class="tab" data-tab="arte"><iconify-icon icon="tabler:palette"></iconify-icon> arte</button>
+                        <button class="tab" data-tab="ideas"><iconify-icon icon="tabler:bulb"></iconify-icon> ideas</button>
+                    </div>
+                    <div class="tab-panel active" id="tab-gaming">
+                        <div class="panel-body">
+                            <h4>zona gaming</h4>
+                            <p>Retos, partidas y el síndrome del farmeo infinito. Los juegos me enseñaron a caer, intentar otra vez y no tomarme tan en serio.</p>
+                        </div>
+                    </div>
+                    <div class="tab-panel" id="tab-arte">
+                        <div class="panel-body">
+                            <h4>zona arte</h4>
+                            <p>El lado tranquilo: colores, música y formas. Crear algo de la nada y que le guste a otra persona sigue siendo magia para mí.</p>
+                        </div>
+                    </div>
+                    <div class="tab-panel" id="tab-ideas">
+                        <div class="panel-body">
+                            <h4>zona ideas</h4>
+                            <p>El cajón de los "¿y si…?". Prototipos, notas raras y experimentos que a veces llegan a producción.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="contacto">
-            <h2 class="section-title">Contacto</h2>
-            <p class="section-sub">¿Tienes una idea, una colaboración o solo quieres saludar? Escríbeme.</p>
-            <div class="grid-2">
-                <div class="card reveal">
-                    <h3>Hablemos</h3>
-                    <p>Respondo rápido en redes y me encanta conocer gente nueva.</p>
-                    <div class="social-row">
-                        <a class="social-chip" href="#"><iconify-icon icon="tabler:brand-instagram"></iconify-icon> Instagram</a>
-                        <a class="social-chip" href="#"><iconify-icon icon="tabler:brand-tiktok"></iconify-icon> TikTok</a>
-                        <a class="social-chip" href="#"><iconify-icon icon="tabler:brand-youtube"></iconify-icon> YouTube</a>
-                        <a class="social-chip" href="#"><iconify-icon icon="tabler:brand-x"></iconify-icon> X</a>
-                    </div>
+            <div class="wrap">
+                <div class="sec-head reveal">
+                    <p class="eyebrow">contacto</p>
+                    <h2 class="sec-title">hablemos.</h2>
                 </div>
-                <form class="card reveal contact-form" id="contactForm">
-                    <input type="text" placeholder="Tu nombre" required>
-                    <input type="email" placeholder="Tu correo" required>
-                    <textarea placeholder="Cuéntame..." required></textarea>
-                    <button class="btn btn-primary" type="submit">Enviar mensaje</button>
-                    <p id="formMsg" style="display:none; color:#22d3ee;">¡Gracias! Te responderé pronto. <iconify-icon icon="tabler:heart-filled" style="color:#f472b6;"></iconify-icon></p>
-                </form>
+                <div class="contact-grid">
+                    <div class="contact-copy reveal">
+                        <p>¿Colaboración, una idea loca o solo quieres saludar? Escríbeme. Respondo con la misma velocidad con la que termino mis proyectos: <em>variable</em>.</p>
+                        <p>Mientras tanto, me encuentras en redes como <a href="#">instagram</a>, <a href="#">tiktok</a> o <a href="#">youtube</a>.</p>
+                    </div>
+                    <form class="reveal" id="contactForm" novalidate>
+                        <input class="input" type="text" placeholder="tu nombre" required>
+                        <input class="input" type="email" placeholder="tu correo" required>
+                        <textarea class="input" placeholder="cuéntame…" required></textarea>
+                        <button class="btn btn-primary" type="submit">enviar</button>
+                        <p class="form-note" id="formMsg">¡gracias! te leo y te devuelvo el mensaje.</p>
+                    </form>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>© 2026 Jostinuwu · Hecho con <iconify-icon icon="tabler:heart-filled" style="color: #f472b6;"></iconify-icon>, café y código</p>
+        <div class="foot-inner">
+            <div>
+                <a href="#inicio" class="logo">jostinuwu<span>.</span></a>
+                <p class="foot-tag">Hecho a mano, con café y sin prisas.</p>
+            </div>
+            <div class="foot-line">
+                <p>© 2026 jostinuwu · hecho con <iconify-icon icon="tabler:heart-filled" style="color:#F0BBA8;"></iconify-icon></p>
+                <div class="foot-links">
+                    <a href="#inicio">inicio</a>
+                    <a href="#sobre-mi">sobre mí</a>
+                    <a href="#contacto">contacto</a>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    <button id="toTop" aria-label="Volver arriba">↑</button>
+    <button id="toTop" aria-label="volver arriba"><iconify-icon icon="tabler:arrow-up"></iconify-icon></button>
 
+    <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
     <script>
-        // Navbar scroll
         const navbar = document.getElementById('navbar');
         const toTop = document.getElementById('toTop');
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 40);
-            toTop.classList.toggle('visible', window.scrollY > 400);
+            toTop.classList.toggle('visible', window.scrollY > 500);
         });
         toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-        // Mobile menu
         const toggle = document.getElementById('navToggle');
         const menu = document.getElementById('navMenu');
         toggle.addEventListener('click', () => menu.classList.toggle('open'));
         menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
 
-        // Typewriter
-        const phrases = ['Creador de contenido', 'Soñador digital', 'Gamer de corazón', 'Contando historias'];
+        const phrases = ['creador de contenido', 'gamer de corazón', 'contador de historias', 'coleccionista de hobbies', 'nómada del café'];
         const typedEl = document.getElementById('typed');
         let pi = 0, ci = 0, deleting = false;
         function type() {
             const word = phrases[pi];
-            const current = word.slice(0, ci);
-            typedEl.textContent = current;
+            typedEl.textContent = word.slice(0, ci);
             if (!deleting) {
                 if (ci < word.length) { ci++; setTimeout(type, 90); }
-                else { deleting = true; setTimeout(type, 1600); }
+                else { deleting = true; setTimeout(type, 1700); }
             } else {
-                if (ci > 0) { ci--; setTimeout(type, 40); }
-                else { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(type, 300); }
+                if (ci > 0) { ci--; setTimeout(type, 35); }
+                else { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(type, 350); }
             }
         }
         type();
 
-        // Tabs
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -722,39 +609,23 @@
             });
         });
 
-        // Contact form
         document.getElementById('contactForm').addEventListener('submit', e => {
             e.preventDefault();
             document.getElementById('formMsg').style.display = 'block';
             e.target.reset();
         });
 
-        // Scroll reveal + counters + bars
         const io = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) return;
-                if (entry.target.classList.contains('reveal')) {
-                    entry.target.classList.add('visible');
-                }
-                entry.target.querySelectorAll('.number[data-target]').forEach(counter => {
-                    if (counter.dataset.done) return;
-                    counter.dataset.done = '1';
-                    const target = +counter.dataset.target;
-                    let n = 0;
-                    const step = Math.max(1, Math.ceil(target / 60));
-                    const timer = setInterval(() => {
-                        n += step;
-                        if (n >= target) { n = target; clearInterval(timer); }
-                        counter.textContent = n;
-                    }, 25);
-                });
+                entry.target.classList.add('visible');
                 entry.target.querySelectorAll('.fill[data-width]').forEach(fill => {
                     fill.style.width = fill.dataset.width + '%';
                 });
             });
-        }, { threshold: 0.2 });
+        }, { threshold: 0.15 });
 
-        document.querySelectorAll('.reveal, .stats, .card').forEach(el => io.observe(el));
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     </script>
 </body>
 </html>
